@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 
-threshold = 20
+threshold = 10
 orb = cv2.ORB_create()
 path = "images/train_images"
 images = []
@@ -10,7 +10,6 @@ classNames = []
 myList = os.listdir(path)
 
 
-# print(myList)
 print("Total Classes Detected: {}".format(len(myList)))
 
 for class_ in myList:
@@ -47,12 +46,13 @@ def findID(image, desList):
                 good.append([m])
 
         matchList.append(len(good))
-    print("Match List: ", matchList, np.argmax(matchList), classNames[np.argmax(matchList)])
 
     if threshold < max(matchList):
         max_index = matchList.index(max(matchList))
 
+    print("Match List: ", matchList, classNames[np.argmax(matchList)], max_index, end=" ")
     return max_index
+
 
 desList = findDes(images)
 
@@ -64,7 +64,22 @@ while True:
     imgOriginal = img.copy()
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    cv2.putText(gray_image, classNames[findID(gray_image, desList)], (50, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 0), 2)
+    id = findID(gray_image, desList)
+
+    if id == -1:
+        cv2.putText(
+            gray_image,
+            "NOT FOUND!",
+            (50, 50), cv2.FONT_HERSHEY_COMPLEX,
+            1, (0, 255, 0), 2
+        )
+    else:
+        cv2.putText(
+            gray_image,
+            classNames[id],
+            (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
+            1, (0, 255, 0), 2
+        )
 
     cv2.imshow("Result", gray_image)
 

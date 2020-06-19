@@ -4,8 +4,8 @@ import numpy as np
 # img1 = cv2.imread("images/train_images/Redmi 5-1.jpg", 0)
 # img2 = cv2.imread("images/test_images/Redmi-Note-5-Pro-Product-shots-1.jpg", 0)
 
-img1 = cv2.imread("images/train_images/calculator.jpg", 0)
-img2 = cv2.imread("images/test_images/calculator (2).jpg", 0)
+img1 = cv2.imread("images/train_images/Redmi 5.jpg", 0)
+img2 = cv2.imread("images/test_images/Redmi-Note-5-Pro-Product-shots-1.jpg", 0)
 
 orb = cv2.ORB_create(nfeatures=1000)
 
@@ -26,5 +26,6 @@ print(len(good))
 cv2.imshow("Image", img1)
 cv2.imshow("Image", img2)
 cv2.imshow("Image", result)
+cv2.imwrite("result2.jpg", result)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
